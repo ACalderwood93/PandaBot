@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const Util = require("./Util.js");
 const client = new Discord.Client();
+const Bot = client;
 const TEXT_GENERAL = "180791241561079816";
 const SMAD_ROLE_ID = "197696044811681792";
 client.login("MzM5NDAxNDgyNzM2NTAwNzM2.DFjd-Q.kGT69FF7KGE5hMJRtvvOzJOi5ec");
@@ -18,6 +19,7 @@ function UserIsSMAD(guildMember) {
 client.on("message", (message) => {
     Util.init(this); // pass the discord client to the util so we can perform discord tasks from it
     Util.ParseMessage(message);
+    
 });
 
 client.on("presenceUpdate", (usrOLD, usrNEW) => {
