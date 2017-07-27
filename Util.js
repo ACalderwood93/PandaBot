@@ -27,6 +27,12 @@ module.exports = {
                 voiceChannel.leave();
             }
         }
+
+        if(message.content.startsWith("!SuggestGame")){
+            // To do 
+            // Assign roles to people based on games that we play, 
+            // this will help suggest games
+        }
     },
     /// Play a sound in response to a message
     PlaySoundinChannel: function (message, soundFilePath, onExit) {
