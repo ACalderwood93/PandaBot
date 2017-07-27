@@ -16,7 +16,7 @@ module.exports = {
         }
 
         if (message.content.startsWith("!Tom")) {
-          this.PlaySoundinChannel(message, "./TomsSong.mp3")
+          this.PlaySoundinChannel(message, "./Sounds/TomsSong.mp3")
         }
     },
     /// Play a sound in response to a message
