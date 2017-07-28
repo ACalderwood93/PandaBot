@@ -20,6 +20,7 @@ client.on("message", (message) => {
     Util.init(this); // pass the discord client to the util so we can perform discord tasks from it
     Util.ParseMessage(message);
     
+    
 });
 
 client.on("presenceUpdate", (usrOLD, usrNEW) => {
@@ -37,5 +38,7 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
         }
 
     }
+
+    
 
 });

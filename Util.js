@@ -23,12 +23,12 @@ module.exports = {
         if (message.content.startsWith("!StopMusic")) {
             var voiceChannel = message.member.voiceChannel;
 
-            if(voiceChannel){
+            if (voiceChannel) {
                 voiceChannel.leave();
             }
         }
 
-        if(message.content.startsWith("!SuggestGame")){
+        if (message.content.startsWith("!SuggestGame")) {
             // To do 
             // Assign roles to people based on games that we play, 
             // this will help suggest games
@@ -37,8 +37,12 @@ module.exports = {
     /// Play a sound in response to a message
     PlaySoundinChannel: function (message, soundFilePath, onExit) {
         var voiceChannel = message.member.voiceChannel;
+
+        if (!voiceChannel)
+            return;
+
         voiceChannel.join().then(connection => {
-            
+
             const dispatcher = connection.playFile(soundFilePath);
             dispatcher.on("end", end => {
                 if (onExit)
