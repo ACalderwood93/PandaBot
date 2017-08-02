@@ -5,6 +5,13 @@ const Bot = client;
 const TEXT_GENERAL = "180791241561079816";
 const SMAD_ROLE_ID = "197696044811681792";
 var EXCLUDED_WELCOME = [];
+var Welcomes = {};
+
+var userLogin = function (user) {
+    this.user = user;
+    loginDate = new date();
+
+}
 client.login("MzM5NDAxNDgyNzM2NTAwNzM2.DFjd-Q.kGT69FF7KGE5hMJRtvvOzJOi5ec");
 
 client.on("ready", () => {
@@ -26,12 +33,14 @@ client.on("message", (message) => {
 
 client.on("presenceUpdate", (usrOLD, usrNEW) => {
 
-    if (usrNEW.presence.status == "online" && usrOLD.presence.status == "offline") {
+    if (!Welcomes[usrNEW.user.username] && usrNEW.presence.status == "online" && usrOLD.presence.status == "offline") {
         console.log("welcome back");
         // var SMAD_Role = usrNEW.guild.roles.find("name", "SMAD");
         //console.log(SMAD_Role.id);
         if (UserIsSMAD(usrNEW) && EXCLUDED_WELCOME.indexOf(usrNEW.user.username) < 0) {
             client.channels.get(TEXT_GENERAL).send("welcome " + usrNEW.user + " [SMAD]");
+            //  Welcomes.push(new userLogin(usrNEW.user));
+            Welcomes[usrNEW.user.username] = new userLogin(usrNEW.user);
         }
         else {
             console.log("just another pleb");
@@ -43,3 +52,5 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
 
 
 });
+
+setInterval(function () { Welcomes = {} }, 54000); // clears the welcome cache every 15 mins 
