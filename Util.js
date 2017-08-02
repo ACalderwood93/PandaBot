@@ -7,8 +7,10 @@ module.exports = {
         AFK: "180791844383227905"
     },
     client: {},
-    init: function (client) {
+    EXCLUDED_WELCOME =[],
+    init: function (client, excludedWelcome) {
         this.client = client;
+        this.EXCLUDED_WELCOME = excludedWelcome;
     },
     ParseMessage: function (message) {
         if (message.content.toLowerCase().startsWith("!help")) {
@@ -27,7 +29,10 @@ module.exports = {
                 voiceChannel.leave();
             }
         }
-
+        if (message.content.startsWith("!ExcludeMe")) {
+            EXCLUDED_WELCOME.push(message.author.username);
+            message.reply("Thank you, you will no longer recieve welcome messages");
+        }
         if (message.content.startsWith("!SuggestGame")) {
             // To do 
             // Assign roles to people based on games that we play, 
@@ -38,8 +43,11 @@ module.exports = {
     PlaySoundinChannel: function (message, soundFilePath, onExit) {
         var voiceChannel = message.member.voiceChannel;
 
-        if (!voiceChannel)
+        if (!voiceChannel) {
+            message.reply("ERROR : You must be in a voice channel before using this command");
             return;
+        }
+
 
         voiceChannel.join().then(connection => {
 

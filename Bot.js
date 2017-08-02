@@ -4,6 +4,7 @@ const client = new Discord.Client();
 const Bot = client;
 const TEXT_GENERAL = "180791241561079816";
 const SMAD_ROLE_ID = "197696044811681792";
+var EXCLUDED_WELCOME = [];
 client.login("MzM5NDAxNDgyNzM2NTAwNzM2.DFjd-Q.kGT69FF7KGE5hMJRtvvOzJOi5ec");
 
 client.on("ready", () => {
@@ -19,8 +20,8 @@ function UserIsSMAD(guildMember) {
 client.on("message", (message) => {
     Util.init(this); // pass the discord client to the util so we can perform discord tasks from it
     Util.ParseMessage(message);
-    
-    
+
+
 });
 
 client.on("presenceUpdate", (usrOLD, usrNEW) => {
@@ -29,7 +30,7 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
         console.log("welcome back");
         // var SMAD_Role = usrNEW.guild.roles.find("name", "SMAD");
         //console.log(SMAD_Role.id);
-        if (UserIsSMAD(usrNEW)) {
+        if (UserIsSMAD(usrNEW) && EXCLUDED_WELCOME.indexOf(usrNEW.user.username) < 0) {
             client.channels.get(TEXT_GENERAL).send("welcome " + usrNEW.user + " [SMAD]");
         }
         else {
@@ -39,6 +40,6 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
 
     }
 
-    
+
 
 });
