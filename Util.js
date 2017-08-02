@@ -14,29 +14,20 @@ module.exports = {
     },
     ParseMessage: function (message) {
         if (message.content.toLowerCase().startsWith("!help")) {
-            message.reply("!gig <HeroName> : Provides wiki page for that Hero");
             message.reply("!Tom : Plays toms song duhh");
-            message.reply("!StopMusic : stops current sound playing");
+            message.reply("!ExcludeMe : Will exclude you from any welcome messages");
         }
 
         if (message.content.startsWith("!Tom")) {
             this.PlaySoundinChannel(message, "./Sounds/TomsSong.mp3")
         }
-        if (message.content.startsWith("!StopMusic")) {
-            var voiceChannel = message.member.voiceChannel;
 
-            if (voiceChannel) {
-                voiceChannel.leave();
-            }
-        }
         if (message.content.startsWith("!ExcludeMe")) {
             EXCLUDED_WELCOME.push(message.author.username);
             message.reply("Thank you, you will no longer recieve welcome messages");
         }
-        if (message.content.startsWith("!SuggestGame")) {
-            // To do 
-            // Assign roles to people based on games that we play, 
-            // this will help suggest games
+        if (message.content.startsWith("!Wow")) {
+            // randomize a Wow clip then play it into the channel
         }
     },
     /// Play a sound in response to a message
