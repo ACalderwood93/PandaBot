@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const Util = require("./Util.js");
+const fs = require("fs");
 const client = new Discord.Client();
 const Bot = client;
 const TEXT_GENERAL = "180791241561079816";
@@ -17,6 +18,19 @@ client.login("MzM5NDAxNDgyNzM2NTAwNzM2.DFjd-Q.kGT69FF7KGE5hMJRtvvOzJOi5ec");
 client.on("ready", () => {
     console.log("I am ready!");
     client.user.setGame("Use !help for list of commands");
+    // load current text data to memory
+    fs.readFile("./Data/Data.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+
+        EXCLUDED_WELCOME = JSON.parse(data);
+        
+
+
+
+    })
+
 });
 
 
@@ -25,7 +39,7 @@ function UserIsSMAD(guildMember) {
 }
 
 client.on("message", (message) => {
-    Util.init(this); // pass the discord client to the util so we can perform discord tasks from it
+    Util.init(this,EXCLUDED_WELCOME); // pass the discord client to the util so we can perform discord tasks from it
     Util.ParseMessage(message);
 
 

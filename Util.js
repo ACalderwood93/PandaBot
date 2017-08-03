@@ -23,8 +23,16 @@ module.exports = {
         }
 
         if (message.content.startsWith("!ExcludeMe")) {
-            EXCLUDED_WELCOME.push(message.author.username);
+            this.EXCLUDED_WELCOME.push(message.author.username);
             message.reply("Thank you, you will no longer recieve welcome messages");
+           fs.writeFile("./Data/Data.txt", JSON.stringify(this.EXCLUDED_WELCOME), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+}); 
+            
         }
         if (message.content.startsWith("!Wow")) {
             // randomize a Wow clip then play it into the channel
@@ -54,6 +62,8 @@ module.exports = {
 
         }).catch(err => { voiceChannel.leave(); });
     }
+
+    
 
 
 }
