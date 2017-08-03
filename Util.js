@@ -1,5 +1,5 @@
 require("discord.js");
-
+var fs = require("fs");
 
 module.exports = {
     Channels: {
@@ -7,7 +7,7 @@ module.exports = {
         AFK: "180791844383227905"
     },
     client: {},
-    EXCLUDED_WELCOME =[],
+    EXCLUDED_WELCOME: [],
     init: function (client, excludedWelcome) {
         this.client = client;
         this.EXCLUDED_WELCOME = excludedWelcome;
@@ -28,6 +28,8 @@ module.exports = {
         }
         if (message.content.startsWith("!Wow")) {
             // randomize a Wow clip then play it into the channel
+            console.log("wow");
+            this.PlaySoundinChannel(message, "./Sounds/wow.mp3");
         }
     },
     /// Play a sound in response to a message

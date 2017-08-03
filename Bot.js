@@ -9,7 +9,7 @@ var Welcomes = {};
 
 var userLogin = function (user) {
     this.user = user;
-    loginDate = new date();
+    this.loginDate = new Date();
 
 }
 client.login("MzM5NDAxNDgyNzM2NTAwNzM2.DFjd-Q.kGT69FF7KGE5hMJRtvvOzJOi5ec");
@@ -40,8 +40,9 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
         if (UserIsSMAD(usrNEW) && EXCLUDED_WELCOME.indexOf(usrNEW.user.username) < 0) {
             client.channels.get(TEXT_GENERAL).send("welcome " + usrNEW.user + " [SMAD]");
             //  Welcomes.push(new userLogin(usrNEW.user));
-            
+
             Welcomes[usrNEW.user.id] = new userLogin(usrNEW.user);
+            console.log(Welcomes[usrNEW.user.id].user);
         }
         else {
             console.log("just another pleb");
@@ -54,4 +55,7 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
 
 });
 
-setInterval(function () { Welcomes = {} }, 54000); // clears the welcome cache every 15 mins 
+setInterval(function () {
+    Welcomes = {};
+    console.log("cleared cache " + new Date().toString());
+}, 900000); // clears the welcome cache every 15 mins 
