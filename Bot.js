@@ -25,7 +25,7 @@ client.on("ready", () => {
         }
 
         EXCLUDED_WELCOME = JSON.parse(data);
-        
+
 
 
 
@@ -39,8 +39,9 @@ function UserIsSMAD(guildMember) {
 }
 
 client.on("message", (message) => {
-    Util.init(this,EXCLUDED_WELCOME); // pass the discord client to the util so we can perform discord tasks from it
-    Util.ParseMessage(message);
+    Util.init(this, EXCLUDED_WELCOME); // pass the discord client to the util so we can perform discord tasks from it
+    if (UserIsSMAD(message.member))
+        Util.ParseMessage(message);
 
 
 });
