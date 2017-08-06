@@ -6,6 +6,7 @@ const Bot = client;
 const TEXT_GENERAL = "180791241561079816";
 const SMAD_ROLE_ID = "197696044811681792";
 var EXCLUDED_WELCOME = [];
+var Logins = [];
 var Welcomes = {};
 
 var userLogin = function (user) {
@@ -25,10 +26,14 @@ client.on("ready", () => {
         }
 
         EXCLUDED_WELCOME = JSON.parse(data);
+    })
 
+    fs.readFile("./Data/logins.txt", "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
 
-
-
+        Logins = JSON.parse(data);
     })
 
 });
@@ -48,13 +53,28 @@ client.on("message", (message) => {
 
 client.on("presenceUpdate", (usrOLD, usrNEW) => {
 
-    if (!Welcomes[usrNEW.user.id] && usrNEW.presence.status == "online" && usrOLD.presence.status == "offline") {
+    if (usrNEW.presence.status == "online" && usrOLD.presence.status == "offline") {
+
+        if (Welcomes[usrNEW.user.id])
+            return;
+
+        Logins.push(new userLogin(usrNEW.user));
+        fs.writeFile("./Data/logins.txt", JSON.stringify(Logins), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
+        });
+
         console.log("welcome back");
         // var SMAD_Role = usrNEW.guild.roles.find("name", "SMAD");
         //console.log(SMAD_Role.id);
         if (UserIsSMAD(usrNEW) && EXCLUDED_WELCOME.indexOf(usrNEW.user.username) < 0) {
             client.channels.get(TEXT_GENERAL).send("welcome " + usrNEW.user + " [SMAD]");
-            //  Welcomes.push(new userLogin(usrNEW.user));
+
+            // Keep track of people logging in and out
+
 
             Welcomes[usrNEW.user.id] = new userLogin(usrNEW.user);
             console.log(Welcomes[usrNEW.user.id].user);
@@ -65,6 +85,9 @@ client.on("presenceUpdate", (usrOLD, usrNEW) => {
         }
 
     }
+
+
+
 
 
 
